@@ -1,10 +1,15 @@
+
+
 .App {
   text-align: center;
 }
 
 .App-logo {
-  height: 40vmin;
+  height: 4rem;
   pointer-events: none;
+}
+h1{
+  font-size: x-large;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -12,14 +17,44 @@
     animation: App-logo-spin infinite 20s linear;
   }
 }
+.container{
+  display: flex;
+  flex-direction: row;
+  gap: 1;
+  min-height: 100%;
+}
+.main{
+  width: 80%;
+  background-color: gray;
+}
+.sideNav{
+  background-color: red;
+  width:20%;
+  display: flex;
+  flex-direction: column;
+}
+.inputDiv{
+  height: 20px;
+  border-radius: 2opx;
+  align-self: center;
+  height: 40px;
+  overflow: hidden;
+  background-color: #004fec;
+  width: 80%;
+  margin-top: 10px;
+}
+.input{
+  border:none;
+  height:100%;
+  width: fit-content;
+  background-color: transparent;
+}
 
 .App-header {
   background-color: #282c34;
-  min-height: 100vh;
+  min-height: 5rem;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
 }
