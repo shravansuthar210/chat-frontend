@@ -13,7 +13,6 @@ const EachContact = ({
   const getAllMsg = async (participantId, to) => {
     try {
       const msg = await getAllmsg(participantId);
-      socket.emit("join chat", { participantId });
       setMessageList([...msg.data.msg]);
       setActiveParticipant({ participantId, to });
     } catch (error) {
@@ -41,6 +40,7 @@ const EachContact = ({
       {contactSearch.map((item) => {
         const { _id, mobile, typing } = item;
         const to = mobile.filter((state) => state !== phone)[0];
+        const opposite = item?.mobile?.filter((state) => state !== phone);
         return (
           <div
             onClick={() => {
@@ -49,12 +49,12 @@ const EachContact = ({
             key={_id}
             className="flex items-center gap-2 my-1 py-1 px-10 cursor-pointer "
           >
-            <div className="rounded-full h-10 w-12 bg-white" />
+            <div className="rounded-full h-10 w-12 bg-white flex justify-center items-center font-semibold text-lg">
+              {String(opposite)[0]}
+            </div>
             <div className="flex flex-col">
-              <span className="w-full text-left font-semibold">
-                {item?.mobile?.filter((state) => state !== phone)}
-              </span>
-              <span>{TypingId === _id && "typing"}</span>
+              <span className="w-full text-left font-semibold">{opposite}</span>
+              <span className="text-sm">{TypingId === _id && "typing..."}</span>
             </div>
           </div>
         );

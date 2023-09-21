@@ -8,12 +8,13 @@ const NewParticipantModal = ({
   phone,
 }) => {
   const [newParticipant, setNewParticipant] = React.useState("");
+  const [fullName, setFullName] = React.useState("");
   const onSubmit = async () => {
     try {
       const newContact = await createContact({
         mobile: [newParticipant, phone],
+        name: fullName,
       });
-      console.log(newContact.data);
       setContact([newContact.data.participant, ...contact]);
       setParticipantModal(false);
     } catch (error) {
@@ -23,9 +24,17 @@ const NewParticipantModal = ({
   return (
     <div className="flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
       <div className="relative w-auto my-6 mx-auto max-w-3xl">
-        <div className="border-0 rounded-lg shadow-lg relative w-96 flex flex-col w-full bg-white outline-none focus:outline-none">
+        <div className="border-0 rounded-lg shadow-lg relative  flex flex-col w-full bg-white outline-none focus:outline-none">
           <form className="px-8 pt-6 pb-8 w-full">
-            <label className="block text-black text-left text-sm font-bold mb-1">
+            <label className="block text-black text-left text-sm font-bold my-1">
+              Enter Full Name
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full mt-1 py-2 px-1 text-black"
+              value={fullName}
+              onChange={(e) => setFullName(e.target.value)}
+            />
+            <label className="block text-black text-left text-sm font-bold my-1">
               Enter Phone Number
             </label>
             <input

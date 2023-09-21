@@ -2,9 +2,9 @@ import React from "react";
 
 const InputSearch = ({ search, setSearch }) => {
   return (
-    <div className="relative mb-4 flex w-[80%] mx-auto mt-2 items-stretch">
+    <div className="relative mb-4 flex  mx-auto mt-2 items-stretch">
       <input
-        className="flex-auto rounded-md px-3 py-1 mx-1"
+        className="flex rounded-md px-3 py-1 mx-1"
         placeholder="Enter Phone number"
         value={search}
         onChange={(e) => setSearch(e.target.value)}

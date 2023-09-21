@@ -1,5 +1,6 @@
 import React from "react";
 import { getAllMyParticipant } from "../api";
+import { socket } from "../config/socket";
 
 const PhoneNumberModal = ({ setPhone, setContact }) => {
   const [phoneTemp, setPhoneTemp] = React.useState("");
@@ -8,6 +9,9 @@ const PhoneNumberModal = ({ setPhone, setContact }) => {
     try {
       const contact = await getAllMyParticipant(phoneTemp);
       console.log(contact.data);
+      const participantId = contact.data.participant.map((item) => item._id);
+      socket.emit("join chat", { participantId });
+
       setContact([...contact.data.participant]);
     } catch (error) {
       alert(error);

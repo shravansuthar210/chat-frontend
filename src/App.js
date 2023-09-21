@@ -33,9 +33,10 @@ function App() {
       time: new Date(),
       ...activeParticipant,
     };
-    setMessageList([...messageList, chunk]);
+    setMessageList([chunk, ...messageList]);
 
     socket.emit("chat", chunk);
+    setMessage("");
   };
 
   const contactSearch = search
@@ -43,15 +44,12 @@ function App() {
     : contact;
 
   React.useEffect(() => {
-    socket.on("chat", (message) => {
-      console.log("receive", message);
-      if (message.participantId) {
-        console.log(messageList);
-        console.log(message);
-        setMessageList([...messageList, message]);
+    socket.on("chat", (tempMsg) => {
+      if (tempMsg) {
+        setMessageList([tempMsg, ...messageList]);
       }
     });
-  }, []);
+  }, [messageList]);
 
   React.useEffect(() => {
     const onTyping = () => {
@@ -89,20 +87,24 @@ function App() {
             setMessageList={setMessageList}
           />
         </div>
-        <div className="w-full flex flex-col items-stretch bg-rose-50">
-          <ChatDashboard messageList={messageList} phone={phone} />
-          <div className="w-full justify-self-end flex  px-8 pb-5">
-            <input
-              className="w-full h-10 p-3"
-              placeholder="Write a message"
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-            />
-            <button className="px-10 bg-blue-500" onClick={onSend}>
-              Send
-            </button>
+        {activeParticipant.participantId ? (
+          <div className="w-full flex flex-col items-stretch bg-rose-50">
+            <ChatDashboard messageList={messageList} phone={phone} />
+            <div className="w-full justify-self-end flex  px-8 pb-5">
+              <input
+                className="w-full h-10 p-3"
+                placeholder="Write a message"
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+              />
+              <button className="px-10 bg-blue-500" onClick={onSend}>
+                Send
+              </button>
+            </div>
           </div>
-        </div>
+        ) : (
+          <div className="w-full flex flex-col justify-center items-stretch bg-gray-200"></div>
+        )}
       </div>
     </div>
   );
